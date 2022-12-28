@@ -1,7 +1,22 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
+
+  const [jsonData,setJsonData]=useState([])
+
+  const readJsonFile=async()=>{
+    const res = await fetch("/dummy.json")
+    const json=await res.json()
+
+    setJsonData(json.faqs)
+  }
+  useEffect(()=>{
+
+    readJsonFile()
+  },[])
+
+  console.log(jsonData)
 
   return (
     <div className="App">
