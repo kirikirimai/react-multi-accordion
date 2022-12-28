@@ -1,28 +1,43 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import './App.css'
+import { motion, useAnimationControls } from 'framer-motion';
+
 
 function App() {
+  const defaultOpenIndex = 0
+  const [jsonData, setJsonData] = useState([])
+  const [openList, setOpenList] = useState([])
 
-  const [jsonData,setJsonData]=useState([])
+  const btn_css = {
+    "backgroundColor": "#ffff00"
+  }
 
-  const readJsonFile=async()=>{
+  const readJsonFile = async () => {
     const res = await fetch("/dummy.json")
-    const json=await res.json()
+    const json = await res.json()
 
+    setOpenList(() => {
+      return [...Array(json.faqs.length)].map((v, i) => i === defaultOpenIndex ? true : false)
+    })
     setJsonData(json.faqs)
   }
-  useEffect(()=>{
 
+  useEffect(() => {
     readJsonFile()
-  },[])
+  }, [])
 
-  console.log(jsonData)
+  const onClickHandler=useCallback((index)=>{
+    setOpenList(openList.map((open,i)=> i === index ? !open : false))
+  },[openList])
+
+
+  console.log(openList)
 
   return (
     <div className="App">
       <h1>Framer Motionを利用したアコーディオン</h1>
-      <p>下記の条件でアコーディオン</p> 
-      <ul> 
+      <p>下記の条件でアコーディオン</p>
+      <ul>
         <li>JSONファイルからデータを取ってくる</li>
         <li>最初のアコーディオンは開いている</li>
         <li>他のアコーディオンをクリックししたら開いてるアコーディオンは閉じる</li>
@@ -31,18 +46,22 @@ function App() {
       <hr />
 
       <div className="accBlock">
-        <div className="accBlock__btn">
+        {jsonData.map((faq, index) => {
+          return (
+            <div key={index}>
+              <div onClick={()=> onClickHandler(index)} className={`${"accBlock__btn"} ${openList[index]? "isClicked" :""}`}>{faq.question}</div>
+              <div className={`${"accBlock__body"} ${openList[index]? "isOpend" :""}`}>
+                {faq.answer}
+              </div>
+            </div>
+          )
+        })}
+        {/* <div className="accBlock__btn">
           アコーディオンタイトル
         </div>
         <div className="accBlock__body">
           <p>アコーディオンの内容</p>
-        </div>
-        <div className="accBlock__btn">
-          アコーディオンタイトル
-        </div>
-        <div className="accBlock__body">
-          <p>アコーディオンの内容</p>
-        </div>
+        </div> */}
       </div>
     </div>
   )

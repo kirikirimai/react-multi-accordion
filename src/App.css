@@ -46,3 +46,18 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+.accBlock__btn.isClicked{
+  background-color:#ffff00;
+}
+
+.accBlock__body{
+  height: 0;
+  overflow: hidden;
+  background-color: #cfcfcf;
+}
+
+.accBlock__body.isOpend{
+  height: auto;
+}
+
