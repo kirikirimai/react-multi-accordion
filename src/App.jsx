@@ -50,18 +50,15 @@ function App() {
           return (
             <div key={index}>
               <div onClick={()=> onClickHandler(index)} className={`${"accBlock__btn"} ${openList[index]? "isClicked" :""}`}>{faq.question}</div>
-              <div className={`${"accBlock__body"} ${openList[index]? "isOpend" :""}`}>
+              <motion.div key="accordion" animate={{height:openList[index] ? "100%": "0"}} transition={0.3} className={`${"accBlock__body"} ${openList[index]? "isOpend" :""}`}>
+                <div className="inner">
                 {faq.answer}
-              </div>
+                </div>
+              </motion.div>
             </div>
           )
         })}
-        {/* <div className="accBlock__btn">
-          アコーディオンタイトル
-        </div>
-        <div className="accBlock__body">
-          <p>アコーディオンの内容</p>
-        </div> */}
+   
       </div>
     </div>
   )
