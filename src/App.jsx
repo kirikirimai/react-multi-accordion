@@ -1,16 +1,14 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
-import { motion, useAnimationControls } from 'framer-motion';
-
+import { motion} from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 function App() {
+
+  {/* 必要なデータ */}
   const defaultOpenIndex = 0
   const [jsonData, setJsonData] = useState([])
   const [openList, setOpenList] = useState([])
-
-  const btn_css = {
-    "backgroundColor": "#ffff00"
-  }
 
   const readJsonFile = async () => {
     const res = await fetch("/dummy.json")
@@ -26,9 +24,9 @@ function App() {
     readJsonFile()
   }, [])
 
-  const onClickHandler=useCallback((index)=>{
+  const onClickHandler=(index)=>{
     setOpenList(openList.map((open,i)=> i === index ? !open : false))
-  },[openList])
+  }
 
 
   console.log(openList)
@@ -36,6 +34,7 @@ function App() {
   return (
     <div className="App">
       <h1>Framer Motionを利用したアコーディオン</h1>
+      <p> <Link to={'/multi/'}>階層のあるアコーディオンはこちら</Link></p>
       <p>下記の条件でアコーディオン</p>
       <ul>
         <li>JSONファイルからデータを取ってくる</li>
@@ -45,12 +44,20 @@ function App() {
       </ul>
       <hr />
 
+      <ul className='openList'>
+        {openList.map((open,i)=>{
+          return(
+            <li key={i}>{String(open)}</li>
+          )
+        })}
+      </ul>
+
       <div className="accBlock">
         {jsonData.map((faq, index) => {
           return (
             <div key={index}>
               <div onClick={()=> onClickHandler(index)} className={`${"accBlock__btn"} ${openList[index]? "isClicked" :""}`}>{faq.question}</div>
-              <motion.div key="accordion" animate={{height:openList[index] ? "100%": "0"}} transition={0.3} className={`${"accBlock__body"} ${openList[index]? "isOpend" :""}`}>
+              <motion.div key="accordion" animate={{height:openList[index] ? "100%": "0"}} transition={0.3} className="accBlock__body">
                 <div className="inner">
                 {faq.answer}
                 </div>
