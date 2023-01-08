@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion} from 'framer-motion';
 import Accordion from '../componets/Accordion';
 import AccordionChild from '../componets/AccordionChild';
+import LoadDataAccrodion from '../componets/LoadDataAccrodion';
 
 
 const LoadPage = () => {
@@ -36,13 +37,6 @@ const LoadPage = () => {
     const onClickHandler=useCallback((index)=>{
         setOpenList(openList.map((open,i)=> i === index ? !open : false))
     },[openList])
-
-
-    const onClickChildHandler=useCallback((index)=>{
-      setOpenListChild(openListChild.map((open,i)=> i === index ? !open : false))
-      
-    },[openListChild])
-
       
   return (
     <div>
@@ -53,8 +47,7 @@ const LoadPage = () => {
         {jsonData.map((post, index) => {
           return (
             <Accordion key={index} index={index} post={post} onClickHandler={onClickHandler} openList={openList} >
-                { index % 2 ==0 ? 
-                <AccordionChild index={index} post={post} onClickChildHandler={onClickChildHandler} openListChild={openListChild} />:""}
+                { index % 2 ==0 && <LoadDataAccrodion index={index} openListChild={openListChild} setOpenListChild={setOpenListChild} />}
             </Accordion>
           )
         })}
