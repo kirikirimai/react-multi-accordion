@@ -5,7 +5,7 @@ import Accordion from '../componets/Accordion';
 import AccordionChild from '../componets/AccordionChild';
 
 
-const Multi = () => {
+const LoadPage = () => {
 
     console.log("multi page")
     const defaultOpenIndex = 0
@@ -64,4 +64,4 @@ const Multi = () => {
   )
 }
 
-export default Multi
+export default LoadPage

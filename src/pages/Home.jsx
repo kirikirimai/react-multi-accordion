@@ -37,6 +37,7 @@ function Home() {
     <div className="App">
       <h1>Framer Motionを利用したアコーディオン</h1>
       <p>多階層のアコーディオンは<Link to={'/multi/'}>こちら</Link></p>
+      <p>データをローディングするアコーディオンは<Link to={'/load/'}>こちら</Link></p>
       <p>下記の条件でアコーディオン</p>
       <ul>
         <li>JSONファイルからデータを取ってくる</li>
